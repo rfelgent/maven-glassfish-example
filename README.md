@@ -1,0 +1,1 @@
+Example Project for demonstrating a java ee 7 webapp development with maven structure
