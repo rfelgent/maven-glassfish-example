@@ -25,7 +25,10 @@
                   rendered="#{facesContext.externalContext.isUserInRole('admin')}"/>
 
     <h:form>
-        <h:commandLink action="#{logoutBean.logout}">Logout</h:commandLink>
+        <h:panelGrid columns="1">
+            <h:commandLink action="#{logoutBean.logout}">Logout</h:commandLink>
+            <h:outputLink action="/index.html">Index</h:outputLink>
+        </h:panelGrid>
     </h:form>
 </h:body>
 </html>

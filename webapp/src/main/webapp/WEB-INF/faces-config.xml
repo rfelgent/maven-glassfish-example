@@ -8,14 +8,4 @@
             <default-locale>en</default-locale>
         </locale-config>
     </application>
-
-    <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>success</from-outcome>
-            <to-view-id>/protected/protected.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-
 </faces-config>

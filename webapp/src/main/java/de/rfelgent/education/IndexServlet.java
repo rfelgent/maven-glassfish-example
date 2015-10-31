@@ -20,6 +20,7 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
+
         try (PrintWriter out = resp.getWriter()) {
             out.print("<!DOCTYPE html>\n" +
                     "<html>\n" +
@@ -29,7 +30,10 @@ public class IndexServlet extends HttpServlet {
                     "</head>\n" +
                     "\n" +
                     "<body>\n" +
-                    "<a href=\"login.xhtml\">Click for JSF login example</a>\n" +
+                    "<h2>Index</h2>\n" +
+                    (req.isUserInRole("user") ?
+                            "<a href=\"protected/protected.xhtml\">protected area</a>\n"
+                                    : "<a href=\"login.xhtml\">login</a>\n") +
                     "</body>\n" +
                     "\n" +
                     "</html> ");

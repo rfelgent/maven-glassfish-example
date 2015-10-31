@@ -12,6 +12,10 @@
     <artifactId>webapp</artifactId>
     <packaging>war</packaging>
 
+    <properties>
+        <glassfish.embedded.tmpDir>${project.build.directory}/glassfish</glassfish.embedded.tmpDir>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.rfelgent.education</groupId>
@@ -90,14 +94,24 @@
                             This system property defines the glassfish installation under "target" (otherwise it would be a random tmp dir).
                             Useful for looking up the current glassfish configuration!
                           -->
-                        <property>glassfish.embedded.tmpdir=${project.build.directory}/glassfish</property>
+                        <property>glassfish.embedded.tmpdir=${glassfish.embedded.tmpDir}</property>
                         <property>
                             java.security.auth.login.config=${project.build.sourceDirectory}/../glassfish/login.conf
                         </property>
                     </systemProperties>
+                    <!--
+                        When settings the domain.xml a few configuration settings provided by the plugin are dropped, e.g. port.
+                        If you use this configuration option, you must have a deep knowledge about GF's domain.xml.
+
+                        The domain.xml created in ${glassfish.embedded.tmpDir} is a good starting point for customizing a domain.xml
                     <configFile>${project.build.sourceDirectory}/../glassfish/domain.xml</configFile>
                     <configFileReadOnly>true</configFileReadOnly>
+                     -->
                     <autoDelete>true</autoDelete>
+                    <ports>
+                        <http-listener>8181</http-listener>
+                        <https-listener>8282</https-listener>
+                    </ports>
                 </configuration>
                 <executions>
                     <execution>
@@ -108,10 +122,10 @@
                         <phase>none</phase>
                         <!--
                             In earlier versions of this plugin, it was sufficient to declare those things in the "base" configuration!
-                            Now you are forced to configure the "<app>" within the "<excecution>" with goal "deploy"!
+                            Currently, you are forced to configure deployment specific settings (like "<app>") within the "deploy"-execution!
                           -->
                         <configuration>
-                            <app>${project.basedir}/target/${project.artifactId}-${project.version}/</app>
+                            <app>${project.basedir}/target/${build.finalName}/</app>
                             <contextRoot>/demo</contextRoot>
                         </configuration>
                     </execution>
@@ -123,12 +137,8 @@
                         <phase>none</phase>
                         <configuration>
                             <commands>
+                                <command>create-auth-realm --classname de.rfelgent.education.realm.MyRealm --property jaas-context=myRealm:jndi-authentication=global/${build.finalName}/AuthenticationService myRealm</command>
                                 <command>add-resources ${project.build.sourceDirectory}/../glassfish/glassfish-resources.xml</command>
-                                <!--
-                                <param>set configs.config.server-config.network-config.protocols.protocol.http-listener.http.websockets-support-enabled=true</param>
-                                <param>set server.jms-service.jms-host.default_JMS_host.port=7878</param>
-                                <param>create-jdbc-connection-pool - -restype=javax.sql.DataSource - -datasourceclassname=XA mypool</param>
-                                 -->
                             </commands>
                         </configuration>
                     </execution>
@@ -136,8 +146,8 @@
                 <dependencies>
                     <!--
                         Define the embedded glassfish server via the plugin dependency.
-                        Therefore, it is possible to configure the glassfish plugin with a
-                        newer version of an embedded glassfish server or vice versa!
+                        Therefore, it is possible to configure the GF plugin with a
+                        newer version of an embedded GF server or vice versa!
                     -->
                     <dependency>
                         <groupId>org.glassfish.main.extras</groupId>

@@ -11,12 +11,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 
 @Service(name = "myRealm")
 public class MyRealm extends BaseRealm {
 
-    private Properties properties;
+    public static final String JNDI_AUTH = "jndi-authentication";
 
     public MyRealm() {
         super();
@@ -28,8 +29,13 @@ public class MyRealm extends BaseRealm {
         super.init(props);
 
         if (!props.containsKey(JAAS_CONTEXT_PARAM)) {
-            throw new IllegalStateException("jaas-context must be configured by <auth-realm> setting in domain.xml!");
+            throw new IllegalStateException("jaas-context must be configured by <auth-realm> setting in domain.xml or by asadmin!");
         }
+        //TODO: Is there a better way for referencing an EJB via JNDI?
+        if (!props.containsKey(JNDI_AUTH)) {
+            throw new IllegalStateException("the jndi name of bean " + AuthenticationService.class.getName() + " must be specified");
+        }
+
         for (String propertyName : props.stringPropertyNames()) {
             setProperty(propertyName, props.getProperty(propertyName));
         }
@@ -42,26 +48,17 @@ public class MyRealm extends BaseRealm {
 
     @Override
     public Enumeration getGroupNames(String username) throws InvalidOperationException, NoSuchUserException {
-        Properties properties = new Properties();
-        properties.put("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");
-        properties.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
-        properties.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-
-        InitialContext remoteContext;
         try {
-            remoteContext = new InitialContext(properties);
-        } catch (NamingException e) {
-            throw new InvalidOperationException("jndi lookup failed");
-        }
-
-        AuthenticationService object;
-        try {
-            object = (AuthenticationService)remoteContext.lookup("java:global/webapp-1.0-SNAPSHOT/AuthenticationService");
+            InitialContext remoteContext = new InitialContext();
+            String jndi = getProperty(JNDI_AUTH);
+            if (!jndi.startsWith("java:")) {
+                jndi += "java:";
+            }
+            List<String> groups = ((AuthenticationService) remoteContext.lookup(jndi)).getGroups(username);
+            return Collections.enumeration(groups);
         } catch (NamingException e) {
             e.printStackTrace();
             throw new InvalidOperationException("jndi lookup failed");
         }
-
-        return Collections.emptyEnumeration();
     }
 }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <glassfish-web-app>
     <!--
-        this was needed by glassfish 3 and prior.
+        this was needed by GF 3 and prior.
         I leave it here for documentation purposes.
-    -->
     <security-role-mapping>
         <role-name>user</role-name>
         <group-name>user</group-name>
@@ -12,4 +11,5 @@
         <role-name>admin</role-name>
         <group-name>admin</group-name>
     </security-role-mapping>
+    -->
 </glassfish-web-app>

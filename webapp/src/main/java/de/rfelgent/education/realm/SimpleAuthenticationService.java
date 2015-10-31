@@ -13,7 +13,7 @@ import java.util.List;
 public class SimpleAuthenticationService implements AuthenticationService {
 
     //only and only if there is at least one EJB injecting the PeristenceContext
-    //then glassfish triggers bootstrapping the persistence.xml!
+    //then GF triggers bootstrapping the persistence.xml!
     @PersistenceContext
     private EntityManager entityManager;
 

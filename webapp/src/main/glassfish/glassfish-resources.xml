@@ -3,7 +3,7 @@
 <resources>
     <!--
         If you place this file in "/WEB-INF/", then this xml file gets automatically
-        picked up by glassfish during deployment of application (.war file)!
+        picked up by GF during deployment of application (.war file)!
     -->
     <jdbc-resource object-type="user" enabled="true" jndi-name="jdbc/demoDatasource" pool-name="DemoCP">
         <description/>

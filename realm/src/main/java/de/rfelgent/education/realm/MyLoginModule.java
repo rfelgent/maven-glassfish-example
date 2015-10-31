@@ -13,8 +13,9 @@ public class MyLoginModule extends BasePasswordLoginModule {
         if (!doAuthentication()) {
             throw new LoginException("invalid username/password");
         }
-        //you must call this method yourself!
-        //the documentation of commitUserAuthentication() is not clear about this!
+        // you must call this method yourself!
+        // the documentation of commitUserAuthentication() was mis-leading for me,
+        // as I thought this method gets invoked automatically in case of successful login. But that was not the case!
         commitUserAuthentication(getAuthenticationService().getGroups(getUsername()).toArray(new String[]{}));
     }
 
@@ -29,9 +30,9 @@ public class MyLoginModule extends BasePasswordLoginModule {
     private AuthenticationService getAuthenticationService() {
 
         try {
-            //FIXME: there must be a better way!
             InitialContext ctx = new InitialContext();
-            return (AuthenticationService)ctx.lookup("java:global/webapp-1.0-SNAPSHOT/SimpleAuthenticationService");
+            //FIXME: there must be a better way!
+            return (AuthenticationService) ctx.lookup("java:global/webapp-1.0-SNAPSHOT/SimpleAuthenticationService");
         } catch (NamingException e) {
             //swallow
         }
