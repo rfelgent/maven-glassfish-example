@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.rfelgent.education</groupId>
+        <artifactId>maven-glassfish</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>webapp</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.rfelgent.education</groupId>
+            <artifactId>realm</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <!--
+            although developing against glassfish server, we do not want
+            any implementation dependencies in the maven project!
+        <dependency>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>${glassfish.version}</version>
+            <scope>provided</scope>
+        </dependency>
+          -->
+
+        <!--
+            We define the javee 7 api dependency with scope "provided", so you can compile the project,
+            but the jar dependencies are not included in the war to create.
+            In fact, it is an overhead to include jars in the war when the application server provides those libraries!
+          -->
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+
+        <!--
+            the "GUI library" primefaces is a nice-to-have feature when developing within jsf framework, but actually not necessary
+
+            known alternatives are:
+                - icefaces
+                - richfaces
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.3</version>
+        </dependency>
+        -->
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>${project.basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.glassfish.embedded</groupId>
+                <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                <configuration>
+                    <systemProperties>
+                        <!--
+                            This system property defines the glassfish installation under "target" (otherwise it would be a random tmp dir).
+                            Useful for looking up the current glassfish configuration!
+                          -->
+                        <property>glassfish.embedded.tmpdir=${project.build.directory}/glassfish</property>
+                        <property>
+                            java.security.auth.login.config=${project.build.sourceDirectory}/../glassfish/login.conf
+                        </property>
+                    </systemProperties>
+                    <configFile>${project.build.sourceDirectory}/../glassfish/domain.xml</configFile>
+                    <configFileReadOnly>true</configFileReadOnly>
+                    <autoDelete>true</autoDelete>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <phase>none</phase>
+                        <!--
+                            In earlier versions of this plugin, it was sufficient to declare those things in the "base" configuration!
+                            Now you are forced to configure the "<app>" within the "<excecution>" with goal "deploy"!
+                          -->
+                        <configuration>
+                            <app>${project.basedir}/target/${project.artifactId}-${project.version}/</app>
+                            <contextRoot>/demo</contextRoot>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>admin</id>
+                        <goals>
+                            <goal>admin</goal>
+                        </goals>
+                        <phase>none</phase>
+                        <configuration>
+                            <commands>
+                                <command>add-resources ${project.build.sourceDirectory}/../glassfish/glassfish-resources.xml</command>
+                                <!--
+                                <param>set configs.config.server-config.network-config.protocols.protocol.http-listener.http.websockets-support-enabled=true</param>
+                                <param>set server.jms-service.jms-host.default_JMS_host.port=7878</param>
+                                <param>create-jdbc-connection-pool - -restype=javax.sql.DataSource - -datasourceclassname=XA mypool</param>
+                                 -->
+                            </commands>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <!--
+                        Define the embedded glassfish server via the plugin dependency.
+                        Therefore, it is possible to configure the glassfish plugin with a
+                        newer version of an embedded glassfish server or vice versa!
+                    -->
+                    <dependency>
+                        <groupId>org.glassfish.main.extras</groupId>
+                        <artifactId>glassfish-embedded-all</artifactId>
+                        <version>${glassfish.version}</version>
+                    </dependency>
+                    <!--
+                        GF initializes a realm during startup/bootstrapping ==> GF system classloader !
+                      -->
+                    <dependency>
+                        <groupId>de.rfelgent.education</groupId>
+                        <artifactId>realm</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                    <!--
+                        Configuring a jdbc resource requires GF to know the jar ==> GF system classloader
+                      -->
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.188</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

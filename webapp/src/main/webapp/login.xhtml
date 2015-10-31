@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+<h:head>
+    <title>Demo</title>
+</h:head>
+<h:body>
+
+    <h2>JSF 2.2 Example</h2>
+    <form method="POST" action="j_security_check">
+        <h:panelGrid columns="2">
+            <h:outputLabel value="username" for="j_username"/>
+            <input id="j_username" name="j_username" />
+            <h:outputLabel value="password" for="j_password"/>
+            <input id="j_password" name="j_password" type="password"/>
+            <h:panelGroup>
+                <input type="submit" value="Login"/>
+            </h:panelGroup>
+        </h:panelGrid>
+    </form>
+</h:body>
+</html>

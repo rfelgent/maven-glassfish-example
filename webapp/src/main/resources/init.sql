@@ -1,0 +1,1 @@
+insert into demo_user (id,username,password) VALUES (1,'max','123456')

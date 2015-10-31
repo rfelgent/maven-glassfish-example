@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 
@@ -10,11 +9,8 @@
     <title>Demo</title>
 </h:head>
 <h:body>
-    <h2>JSF 2.2 Example</h2>
-    <h:messages globalOnly="true"/>
-    <div>Protected area! Now you do some cool stuff!</div>
-    <h:form>
-        <h:commandLink action="#{loginLogoutBean.logout}">Logout</h:commandLink>
-    </h:form>
+    <h1>Login error</h1>
+    <div>username/password is invalid</div>
+    <h:outputLink value="/demo/login.xhtml">Login</h:outputLink>
 </h:body>
 </html>
