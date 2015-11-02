@@ -2,7 +2,7 @@ Example Project for demonstrating a java ee 7 webapp development within a maven 
 
 Technical Features
 ===
-- in-memory GF server (usage of maven plugin "maven-embedded-glassfish-plugin"
+- in-memory GF server (usage of maven plugin "maven-embedded-glassfish-plugin")
 - in-memory h2 database (with automatic database creation and data initialisation)
 - custom GF login realm/module
 - JSF based login combined with Container-Auth (no "j_security_check", but "login.xml")
