@@ -23,10 +23,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
         <!--
             although developing against glassfish server, we do not want
             any implementation dependencies in the maven project!
@@ -125,7 +121,7 @@
                             Currently, you are forced to configure deployment specific settings (like "<app>") within the "deploy"-execution!
                           -->
                         <configuration>
-                            <app>${project.basedir}/target/${build.finalName}/</app>
+                            <app>${project.basedir}/target/${project.build.finalName}/</app>
                             <contextRoot>/demo</contextRoot>
                         </configuration>
                     </execution>
@@ -137,7 +133,7 @@
                         <phase>none</phase>
                         <configuration>
                             <commands>
-                                <command>create-auth-realm --classname de.rfelgent.education.realm.MyRealm --property jaas-context=myRealm:jndi-authentication=global/${build.finalName}/AuthenticationService myRealm</command>
+                                <command>create-auth-realm --classname de.rfelgent.education.realm.MyRealm --property jaas-context=myRealm:jndi-authentication=global/${project.build.finalName}/AuthenticationService myRealm</command>
                                 <command>add-resources ${project.build.sourceDirectory}/../glassfish/glassfish-resources.xml</command>
                             </commands>
                         </configuration>

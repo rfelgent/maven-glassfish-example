@@ -3,24 +3,25 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-
-
 <h:head>
     <title>Demo</title>
 </h:head>
 <h:body>
 
     <h2>JSF 2.2 Example</h2>
-    <form method="POST" action="j_security_check">
+    <h:messages globalOnly="true"/>
+    <h:form>
+        <!-- this field helps to memorize the originally requested URI -->
+        <h:inputHidden value="#{authenticationBean.redirectUrl}"/>
         <h:panelGrid columns="2">
-            <h:outputLabel value="username" for="j_username"/>
-            <input id="j_username" name="j_username" />
-            <h:outputLabel value="password" for="j_password"/>
-            <input id="j_password" name="j_password" type="password"/>
+            <h:outputLabel value="username" for="username"/>
+            <h:inputText id="username" name="username" value="#{authenticationBean.username}"/>
+            <h:outputLabel value="password" for="password"/>
+            <h:inputSecret id="password" name="password" value="#{authenticationBean.password}"/>
             <h:panelGroup>
-                <input type="submit" value="Login"/>
+                <h:commandButton value="Login" action="#{authenticationBean.login}"/>
             </h:panelGroup>
         </h:panelGrid>
-    </form>
+    </h:form>
 </h:body>
 </html>

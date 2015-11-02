@@ -8,10 +8,11 @@
 </h:head>
 <h:body>
     <h2>JSF 2.2 Example</h2>
-    Sie wurden vom System abgemeldet
+    <h:messages globalOnly="true"/>
+    <h:outputText value="You are logged out! For security reasons it is recommended to close the browser tab, too!"/>
     <h:panelGrid columns="1" style="clear: left">
-        <h:outputLink value="login.xhtml">Anmelden</h:outputLink><br/>
-        <h:outputLink value="index.html">Startseite</h:outputLink>
+        <h:link value="Login" outcome="login" />
+        <h:outputLink value="#{request.contextPath}/index.html">Index</h:outputLink>
     </h:panelGrid>
 </h:body>
 </html>

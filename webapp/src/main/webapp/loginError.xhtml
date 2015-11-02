@@ -4,13 +4,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-
+<!--
+    this page is actually obsolete, as the login is handled within jsf
+    and not the container
+  -->
 <h:head>
     <title>Demo</title>
 </h:head>
 <h:body>
     <h1>Login error</h1>
     <div>username/password is invalid</div>
-    <h:outputLink value="/demo/login.xhtml">Login</h:outputLink>
+    <h:link value="Login" outcome="login" />
 </h:body>
 </html>

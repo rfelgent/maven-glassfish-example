@@ -19,15 +19,15 @@
 
     <div>Protected area! Now you do some cool stuff!</div>
 
-    <h:outputText value="Your are logged in with role user"
-                  rendered="#{facesContext.externalContext.isUserInRole('user')}"/>
-    <h:outputText value="Your are logged in with role admin"
-                  rendered="#{facesContext.externalContext.isUserInRole('admin')}"/>
+    <h:outputText value="You have security role 'user'"
+                  rendered="#{request.isUserInRole('user')}"/>
+    <h:outputText value="Your have security role 'admin'"
+                  rendered="#{request.isUserInRole('admin')}"/>
 
     <h:form>
         <h:panelGrid columns="1">
-            <h:commandLink action="#{logoutBean.logout}">Logout</h:commandLink>
-            <h:outputLink action="/index.html">Index</h:outputLink>
+            <h:commandLink action="#{authenticationBean.logout}">Logout</h:commandLink>
+            <h:outputLink value="#{request.contextPath}/index.html">Index</h:outputLink>
         </h:panelGrid>
     </h:form>
 </h:body>
