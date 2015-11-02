@@ -5,7 +5,7 @@ Technical Features
 - in-memory GF server (usage of maven plugin "maven-embedded-glassfish-plugin")
 - in-memory h2 database (with automatic database creation and data initialisation)
 - custom GF login realm/module
-- JSF based login combined with Container-Auth (no "j_security_check", but "login.xml")
+- JSF based login combined with Container-Auth (no "j_security_check", but "login.xhtml")
 - JPA 2.1 (used by custom login module for user authorization)
 - JSF 2.2
 
