@@ -96,7 +96,7 @@
                         </property>
                     </systemProperties>
                     <!--
-                        When settings the domain.xml a few configuration settings provided by the plugin are dropped, e.g. port.
+                        When using the domain.xml a few configuration settings provided by the plugin are dropped, e.g. port.
                         If you use this configuration option, you must have a deep knowledge about GF's domain.xml.
 
                         The domain.xml created in ${glassfish.embedded.tmpDir} is a good starting point for customizing a domain.xml
@@ -130,10 +130,13 @@
                         <goals>
                             <goal>admin</goal>
                         </goals>
+                        <!--
+                            This helps to avoid the startup of this plugin during a specific maven life cycle.
+                        -->
                         <phase>none</phase>
                         <configuration>
                             <commands>
-                                <command>create-auth-realm --classname de.rfelgent.education.realm.MyRealm --property jaas-context=myRealm:jndi-authentication=global/${project.build.finalName}/AuthenticationService myRealm</command>
+                                <command>create-auth-realm --classname de.rfelgent.edu.realm.MyRealm --property jaas-context=myRealm:jndi-authentication=global/${project.build.finalName}/AuthenticationService myRealm</command>
                                 <command>add-resources ${project.build.sourceDirectory}/../glassfish/glassfish-resources.xml</command>
                             </commands>
                         </configuration>
@@ -141,7 +144,7 @@
                 </executions>
                 <dependencies>
                     <!--
-                        Define the embedded glassfish server via the plugin dependency.
+                        Define the embedded GF server via the plugin dependency.
                         Therefore, it is possible to configure the GF plugin with a
                         newer version of an embedded GF server or vice versa!
                     -->

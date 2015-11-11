@@ -1,4 +1,4 @@
-Example Project for demonstrating a java ee 7 webapp development within a maven structure
+Example Project for demonstrating a java EE 7 webapp development within a maven structure
 
 Technical Features
 ===
@@ -8,11 +8,17 @@ Technical Features
 - JSF based login combined with Container-Auth (no "j_security_check", but "login.xhtml")
 - JPA 2.1 (used by custom login module for user authorization)
 - JSF 2.2
+- bean validation
 
-Start
+Features
 ===
-Perform the those preparation steps:
+- login
+- register (newly registered user can login, too!)
+
+Getting started
+===
 
 - mvn clean install
 - cd ./webapp/ && mvn embedded-glassfish:run
-- go to http://localhost:8181/demo (valid credentials are "max:123456")
+- open "http://localhost:8181/demo" via a browser
+- login via "max:123456" (normal user) or "admin:admin" (admin user)

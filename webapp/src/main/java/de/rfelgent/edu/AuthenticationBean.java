@@ -1,4 +1,4 @@
-package de.rfelgent.education;
+package de.rfelgent.edu;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -37,6 +37,7 @@ public class AuthenticationBean implements Serializable {
             //bean was used by login.xhtml for submitting the credentials
         }
     }
+
     public String logout() {
         try {
             //the later "invalidateSession()" does not perform a logout, although the user is defacto not known anymore due to discarded session

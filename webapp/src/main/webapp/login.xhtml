@@ -8,7 +8,7 @@
 </h:head>
 <h:body>
 
-    <h2>JSF 2.2 Example</h2>
+    <h2>Login</h2>
     <h:messages globalOnly="true"/>
     <h:form>
         <!-- this field helps to memorize the originally requested URI -->
@@ -21,6 +21,8 @@
             <h:panelGroup>
                 <h:commandButton value="Login" action="#{authenticationBean.login}"/>
             </h:panelGroup>
+
+            <h:link outcome="register" value="Register"/>
         </h:panelGrid>
     </h:form>
 </h:body>

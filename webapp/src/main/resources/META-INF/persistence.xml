@@ -4,7 +4,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <!--
         must use "JTA" and not "RESOURCE_LOCAL", otherwise glassfish complains
-        injecting a @PersistenceContext in a container managed bean!
+        injecting a @PersistenceContext in a container managed EJB!
       -->
     <persistence-unit name="demoPU" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -16,10 +16,15 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.hbm2ddl.import_files" value="init.sql"/>
             <!--
+                 https://hibernate.atlassian.net/browse/HHH-9446
+                 This instructs hibernate not scan for the classes from the GF classloader but rather from webapp classloader!
+            -->
+            <property name="hibernate.classloading.use_current_tccl_as_parent" value="false"/>
+            <!--
                  must tell hibernate to use the JTA feature of the ApplicationServer,
                  otherwise
                     - warning during bootstrapping occurs
-                    - exception gets triggered when executing queries (NPE)
+                    - exception gets triggered when executing update/delete queries (NPE)
               -->
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
         </properties>

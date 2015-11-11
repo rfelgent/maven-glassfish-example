@@ -1,4 +1,4 @@
-package de.rfelgent.education;
+package de.rfelgent.edu;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,14 +26,14 @@ public class IndexServlet extends HttpServlet {
                     "<html>\n" +
                     "<head>\n" +
                     "    <meta charset=\"UTF-8\">\n" +
-                    "    <title>Index of DEMO</title>\n" +
+                    "    <title>Demo</title>\n" +
                     "</head>\n" +
                     "\n" +
                     "<body>\n" +
                     "<h2>Index</h2>\n" +
-                    (req.isUserInRole("user") ?
+                    (req.isUserInRole("USER") ?
                             "<a href=\"protected/protected.xhtml\">protected area</a>\n"
-                                    : "<a href=\"login.xhtml\">login</a>\n") +
+                                    : "<a href=\"login.xhtml\">Login</a><br/><a href=\"register.xhtml\">Register</a>\n") +
                     "</body>\n" +
                     "\n" +
                     "</html> ");

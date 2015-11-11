@@ -1,4 +1,4 @@
-package de.rfelgent.education.realm;
+package de.rfelgent.edu.realm;
 
 import com.sun.enterprise.security.BaseRealm;
 import com.sun.enterprise.security.auth.realm.BadRealmException;

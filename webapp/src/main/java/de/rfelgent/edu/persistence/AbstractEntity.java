@@ -1,4 +1,4 @@
-package de.rfelgent.education.persistence;
+package de.rfelgent.edu.persistence;
 
 
 import javax.persistence.GeneratedValue;

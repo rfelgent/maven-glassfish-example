@@ -10,7 +10,10 @@
         <param-name>javax.faces.application.CONFIG_FILES</param-name>
         <param-value>/WEB-INF/faces-config.xml</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -52,7 +55,7 @@
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>user</role-name>
+            <role-name>USER</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -65,9 +68,9 @@
     </security-constraint>
 
     <security-role>
-        <role-name>user</role-name>
+        <role-name>USER</role-name>
     </security-role>
     <security-role>
-        <role-name>admin</role-name>
+        <role-name>ADMIN</role-name>
     </security-role>
 </web-app>
